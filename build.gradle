@@ -1,0 +1,42 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.9.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+	id 'nebula.release' version '9.2.0'
+	id 'nebula.info' version '5.0.0'
+	id 'com.bmuschko.docker-spring-boot-application' version '4.7.0'
+}
+
+group = 'com.panera'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	compileOnly 'org.projectlombok:lombok:latest.release'
+	annotationProcessor 'org.projectlombok:lombok:latest.release'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+if(hasProperty('dockerUser') && hasProperty('dockerPassword')) {
+	docker {
+		registryCredentials {
+			url = 'https://panerabread.artifactory.com'
+			username = dockerUser
+			password = dockerPassword
+			email = 'jkschneider@gmail.com'
+		}
+
+		springBootApplication {
+			tag = "$dockerUser/canarydemo"
+		}
+	}
+}
