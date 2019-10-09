@@ -32,11 +32,11 @@ if(hasProperty('dockerUser') && hasProperty('dockerPassword')) {
 			url = 'https://panerabread.artifactory.com'
 			username = dockerUser
 			password = dockerPassword
-			email = 'jkschneider@gmail.com'
+			//email = 'jkschneider@gmail.com'
 		}
 
 		springBootApplication {
-			tag = "$dockerUser/canarydemo"
+			tag = "devops/canarydemo"
 		}
 	}
 }
